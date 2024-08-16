@@ -1,2 +1,2 @@
 # YakisobaGUILib
-For Bukkit, Spigot, Paper plugin - Library
+*For Bukkit, Spigot, Paper plugin - Library*

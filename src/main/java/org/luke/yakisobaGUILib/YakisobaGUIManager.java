@@ -25,8 +25,9 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         return playerCurrentPage;
     }
 
-    public YakisobaGUIManager(JavaPlugin plugin) {
+    public YakisobaGUIManager(JavaPlugin plugin, List<GUIAbstract<E>> guiList) {
         plugin.getServer().getPluginManager().registerEvents( this, plugin );
+        this.guiList = guiList;
     }
 
     public void OpenGUI(Player player, Enum<E> eEnum) {

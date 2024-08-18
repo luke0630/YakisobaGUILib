@@ -18,7 +18,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     private Map<Player, Enum<E>> openGUI = new HashMap<>();
     private Map<Player, Enum<L>> listGUI = new HashMap<>();
 
-    private List<GUIAbstract<E>> guiList = new ArrayList<>();
+    private List<GUIAbstract<?>> guiList = new ArrayList<>();
     private Map<Player, Integer> playerCurrentPage = new HashMap<>();
 
     public Map<Player, Integer> getPlayerCurrentPage() {
@@ -28,7 +28,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     public YakisobaGUIManager() {
     }
 
-    public void Initialization(JavaPlugin plugin, List<GUIAbstract<E>> guiList) {
+    public void Initialization(JavaPlugin plugin, List<GUIAbstract<?>> guiList) {
         plugin.getServer().getPluginManager().registerEvents( this, plugin );
         this.guiList = guiList;
     }
@@ -48,7 +48,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
 
     Inventory getGUI(Enum<?> type, Player player) {
         for(var gui : guiList) {
-            if(gui instanceof ListGUIAbstract<E> listGUIa) {
+            if(gui instanceof ListGUIAbstract<?> listGUIa) {
                 return listGUIa.getInventory(player, playerCurrentPage);
             }
             if(gui.getType() == type) return gui.getInventory();
@@ -61,7 +61,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     @EventHandler
     public void onClickInventory(InventoryClickEvent event) {
         for(var gui : guiList) {
-            if(gui instanceof ListGUIAbstract<E> listGUI) {
+            if(gui instanceof ListGUIAbstract<?> listGUI) {
                 listGUI.InventoryClickListener(event, playerCurrentPage);
             }
             gui.InventoryClickListener(event);

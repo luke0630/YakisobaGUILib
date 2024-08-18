@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements Listener {
-    private Map<Player, Enum<E>> openGUI = new HashMap<>();
-    private Map<Player, Enum<L>> listGUI = new HashMap<>();
+    private Map<Player, Enum<?>> openGUI = new HashMap<>();
 
     private List<GUIAbstract<?>> guiList = new ArrayList<>();
     private Map<Player, Integer> playerCurrentPage = new HashMap<>();
@@ -40,10 +39,10 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         openGUI.put(player, eEnum);
     }
     public void OpenListGUI(Player player, Enum<L> lEnum) {
-        listGUI.put(player, lEnum);
+        openGUI.put(player, lEnum);
         var gui = getGUI(lEnum, player);
         player.openInventory(gui);
-        listGUI.put(player, lEnum);
+        openGUI.put(player, lEnum);
     }
 
     Inventory getGUI(Enum<?> type, Player player) {
@@ -63,26 +62,24 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         Player player = (Player) event.getWhoClicked();
         var clickedInventory = event.getClickedInventory();
         var topInventory = player.getOpenInventory().getTopInventory();
+
+        if(!openGUI.containsKey(player)) return;
         if(clickedInventory != topInventory) return;
 
+        event.setCancelled(true);
+
         for(var openSet : openGUI.values()) {
-            for(var gui : guiList) {
-                if(gui.getType() == openSet) {
-                    gui.InventoryClickListener(event);
-                    return;
-                }
-            }
-        }
-        for(var openSet : listGUI.values()) {
             for(var gui : guiList) {
                 if(gui.getType() == openSet) {
                     if(gui instanceof ListGUIAbstract<?> listGUI) {
                         listGUI.InventoryClickListener(event, playerCurrentPage);
                         break;
                     }
+                    gui.InventoryClickListener(event);
+                    break;
                 }
             }
         }
-        event.setCancelled(true);
+
     }
 }

@@ -25,9 +25,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     @Override
     public abstract String getGUITitle();
 
-    @Override
-    public abstract Enum<L> getType();
-
     public abstract List<ItemStack> getItemList();
 
     public abstract ItemStack setCenterItemStack();

@@ -83,5 +83,6 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
                 }
             }
         }
+        event.setCancelled(true);
     }
 }

@@ -76,7 +76,7 @@
             <groupId>com.github.luke0630</groupId>
             <artifactId>TakoyakiLibrary</artifactId>
             <version>3.0</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

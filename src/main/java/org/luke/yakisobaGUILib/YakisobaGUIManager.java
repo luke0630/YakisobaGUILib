@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.luke.yakisobaGUILib.Abstract.GUIAbstract;
@@ -56,6 +57,13 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     }
 
 
+    @EventHandler
+    public void onCloseInventory(InventoryCloseEvent event) {
+        Player player = (Player) event.getPlayer();
+        openGUI.remove(player);
+    }
+
+
     
     @EventHandler
     public void onClickInventory(InventoryClickEvent event) {
@@ -64,9 +72,9 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         var topInventory = player.getOpenInventory().getTopInventory();
 
         if(!openGUI.containsKey(player)) return;
-        if(clickedInventory != topInventory) return;
 
         event.setCancelled(true);
+        if(clickedInventory != topInventory) return;
 
         for(var openSet : openGUI.values()) {
             for(var gui : guiList) {

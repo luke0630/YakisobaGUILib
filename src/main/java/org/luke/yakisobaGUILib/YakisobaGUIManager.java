@@ -60,6 +60,11 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     
     @EventHandler
     public void onClickInventory(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        var clickedInventory = event.getClickedInventory();
+        var topInventory = player.getOpenInventory().getTopInventory();
+        if(clickedInventory != topInventory) return;
+
         for(var openSet : openGUI.values()) {
             for(var gui : guiList) {
                 if(gui.getType() == openSet) {

@@ -22,6 +22,24 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
     private Player player;
 
+    /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
+    @Override
+    public Enum<L> getType() {
+        return null;
+    }
+
+    @Override
+    public Inventory getInventory() {
+        return null;
+    }
+
+    @Override
+    public void InventoryClickListener(InventoryClickEvent event) {
+
+    }
+    /////****************************************************************************************////
+
+
     @Override
     public abstract String getGUITitle();
 
@@ -45,7 +63,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
         //------------下のバーの動作・コンテンツのクリック------------
         if(CLICK_CENTER == slot) {
-            inventoryRunnable = whenClickContent();
+            inventoryRunnable = whenClickCenter();
         } else if(CLICK_BACK == slot) {
             inventoryRunnable = whenClickBack();
         } else if(slot < 5*9) {
@@ -86,7 +104,11 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         //----------下の操作バー----------
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {
             if (CLICK_CENTER == i && whenClickCenter() != null) {
-                inventory.setItem(i, setCenterItemStack());
+                if(setCenterItemStack() != null) {
+                    inventory.setItem(i, setCenterItemStack());
+                } else {
+                    inventory.setItem(i, getItem(Material.REDSTONE_BLOCK, "&c&インタアクションする"));
+                }
                 continue;
             }
             if (CLICK_BACK == i && whenClickBack() != null) {

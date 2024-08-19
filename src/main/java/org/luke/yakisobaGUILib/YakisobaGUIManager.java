@@ -72,9 +72,9 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         var topInventory = player.getOpenInventory().getTopInventory();
 
         if(!openGUI.containsKey(player)) return;
-
         event.setCancelled(true);
         if(clickedInventory != topInventory) return;
+        event.setCancelled(true);
 
         for(var openSet : openGUI.values()) {
             for(var gui : guiList) {

@@ -31,6 +31,11 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     public void Initialization(JavaPlugin plugin, List<GUIAbstract<?>> guiList) {
         plugin.getServer().getPluginManager().registerEvents( this, plugin );
         this.guiList = guiList;
+        for(var gui : guiList) {
+            if(gui instanceof ListGUIAbstract<?> listGUI) {
+                listGUI.setOpenGUI(openGUI);
+            }
+        }
     }
 
     public void OpenGUI(Player player, Enum<E> eEnum) {
@@ -49,7 +54,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     Inventory getGUI(Enum<?> type, Player player) {
         for(var gui : guiList) {
             if(gui instanceof ListGUIAbstract<?> listGUIa) {
-                return listGUIa.getInventory(player, playerCurrentPage);
+                return listGUIa.getInventoryList(player, playerCurrentPage);
             }
             if(gui.getType() == type) return gui.getInventory();
         }

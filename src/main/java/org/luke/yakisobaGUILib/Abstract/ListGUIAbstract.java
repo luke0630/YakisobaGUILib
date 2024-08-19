@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.luke.yakisobaGUILib.YakisobaGUIManager;
 
 import java.util.List;
 import java.util.Map;
@@ -20,13 +21,13 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     static final Integer START_BAR_INDEX = 9 * 5;
     static final Integer GUI_ITEM_SIZE = 9 * 5;
 
-    private Player player;
+    public void setOpenGUI(Map<Player, Enum<?>> openGUI) {
+        this.openGUI = openGUI;
+    }
+
+    private Map<Player, Enum<?>> openGUI;
 
     /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
-    @Override
-    public Enum<L> getType() {
-        return null;
-    }
 
     @Override
     public Inventory getInventory() {
@@ -80,34 +81,34 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         var currentOpenPage = pageMap.get(player);
         if(currentOpenPage == null) return;
         var maxPage = getMaxPage( getItemList().size() );
+        player.sendMessage("ここまで来ました");
         if(currentOpenPage > 0 && slot == START_BAR_INDEX + 7) {
             //戻る
             pageMap.replace(player, pageMap.get(player)-1);
-            player.openInventory(getInventory(player, pageMap));
+            player.openInventory(getInventoryList(player, pageMap));
+            openGUI.put(player, getType());
         } else if(currentOpenPage < maxPage && slot == START_BAR_INDEX+8) {
             //次へ
-            pageMap.replace(player, pageMap.get(player)-1);
-            player.openInventory(getInventory(player, pageMap));
+            pageMap.replace(player, pageMap.get(player)+1);
+            player.openInventory(getInventoryList(player, pageMap));
+            openGUI.put(player, getType());
         }
         //------------下のバーの戻る次へボタン-----------
     }
 
 
     //DO NOT ABSTRACT
-    public Inventory getInventory(Player player, Map<Player, Integer> pageMap) {
-        this.player = player;
-
+    public Inventory getInventoryList(Player player, Map<Player, Integer> pageMap) {
         Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 
         var items = getItemList();
-
         //----------下の操作バー----------
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {
             if (CLICK_CENTER == i && whenClickCenter() != null) {
                 if(setCenterItemStack() != null) {
                     inventory.setItem(i, setCenterItemStack());
                 } else {
-                    inventory.setItem(i, getItem(Material.REDSTONE_BLOCK, "&cインﾀﾗクションする"));
+                    inventory.setItem(i, getItem(Material.REDSTONE_BLOCK, "&cインタラクションする"));
                 }
                 continue;
             }
@@ -152,7 +153,11 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             for (int i = 0; i < items.size(); i++) {
                 inventory.setItem(i, items.get(i));
             }
+
+
         }
+
+
         return inventory;
     }
 

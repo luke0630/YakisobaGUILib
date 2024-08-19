@@ -107,7 +107,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
                 if(setCenterItemStack() != null) {
                     inventory.setItem(i, setCenterItemStack());
                 } else {
-                    inventory.setItem(i, getItem(Material.REDSTONE_BLOCK, "&c&インタアクションする"));
+                    inventory.setItem(i, getItem(Material.REDSTONE_BLOCK, "&cインﾀﾗクションする"));
                 }
                 continue;
             }

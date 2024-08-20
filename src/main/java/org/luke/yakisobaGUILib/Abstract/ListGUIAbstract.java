@@ -21,7 +21,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     static final Integer START_BAR_INDEX = 9 * 5;
     static final Integer GUI_ITEM_SIZE = 9 * 5;
 
-    private Player player = null;
+    public Player player = null;
 
     public void setOpenGUI(Map<Player, Enum<?>> openGUI) {
         this.openGUI = openGUI;

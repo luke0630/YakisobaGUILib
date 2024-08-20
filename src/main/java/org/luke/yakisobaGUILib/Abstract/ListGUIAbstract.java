@@ -30,7 +30,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
 
     @Override
-    public Inventory getInventory() {
+    public Inventory getInventory(Player player) {
         return null;
     }
 

@@ -56,7 +56,7 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
             if(gui instanceof ListGUIAbstract<?> listGUIa) {
                 return listGUIa.getInventoryList(player, playerCurrentPage);
             }
-            if(gui.getType() == type) return gui.getInventory();
+            if(gui.getType() == type) return gui.getInventory(player);
         }
         return null;
     }

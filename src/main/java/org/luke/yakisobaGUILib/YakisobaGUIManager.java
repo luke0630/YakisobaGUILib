@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.luke.takoyakiLibrary.TakoUtility.toColor;
+
 public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements Listener {
     private Map<Player, Enum<?>> openGUI = new HashMap<>();
 
@@ -39,26 +41,31 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
     }
 
     public void OpenGUI(Player player, Enum<E> eEnum) {
-        openGUI.put(player, eEnum);
-        var gui = getGUI(eEnum, player);
-        player.openInventory(gui);
-        openGUI.put(player, eEnum);
+        getAndOpenGUI(eEnum, player);
     }
     public void OpenListGUI(Player player, Enum<L> lEnum) {
-        openGUI.put(player, lEnum);
-        var gui = getGUI(lEnum, player);
-        player.openInventory(gui);
-        openGUI.put(player, lEnum);
+        getAndOpenGUI(lEnum, player);
     }
 
-    Inventory getGUI(Enum<?> type, Player player) {
+    public void  getAndOpenGUI(Enum<?> type, Player player) {
+        Inventory inventory = null;
         for(var gui : guiList) {
-            if(gui instanceof ListGUIAbstract<?> listGUIa) {
-                return listGUIa.getInventoryList(player, playerCurrentPage);
+            if(gui.getType() == type) {
+                if(gui instanceof ListGUIAbstract<?> listGUIa) {
+                    inventory = listGUIa.getInventoryList(player, playerCurrentPage);
+                } else {
+                    inventory = gui.getInventory(player);
+                }
             }
-            if(gui.getType() == type) return gui.getInventory(player);
         }
-        return null;
+        if(inventory != null) {
+            openGUI.put(player, type);
+            player.openInventory(inventory);
+            openGUI.put(player, type);
+        } else {
+            player.sendMessage(toColor("&c&lそのGUIは登録されていません。 GUI NAME:  " + type.toString() ));
+            player.closeInventory();
+        }
     }
 
 

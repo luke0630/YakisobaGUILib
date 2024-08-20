@@ -21,6 +21,8 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     static final Integer START_BAR_INDEX = 9 * 5;
     static final Integer GUI_ITEM_SIZE = 9 * 5;
 
+    private Player player = null;
+
     public void setOpenGUI(Map<Player, Enum<?>> openGUI) {
         this.openGUI = openGUI;
     }
@@ -101,6 +103,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     public Inventory getInventoryList(Player player, Map<Player, Integer> pageMap) {
         Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 
+        this.player = player;
         var items = getItemList();
         //----------下の操作バー----------
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {

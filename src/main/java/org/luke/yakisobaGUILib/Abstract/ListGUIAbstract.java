@@ -99,10 +99,12 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
     //DO NOT ABSTRACT
     public Inventory getInventoryList(Player player, Map<Player, Integer> pageMap) {
-        Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 
         this.player = player;
+
         var items = getItemList();
+        Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
+
         //----------下の操作バー----------
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {
             if (CLICK_CENTER == i && whenClickCenter() != null) {

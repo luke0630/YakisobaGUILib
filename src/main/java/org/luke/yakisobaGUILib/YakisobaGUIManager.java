@@ -1,5 +1,6 @@
 package org.luke.yakisobaGUILib;
 
+import org.bukkit.entity.Explosive;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -63,8 +64,12 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
             player.openInventory(inventory);
             openGUI.put(player, type);
         } else {
-            player.sendMessage(toColor("&c&lそのGUIは登録されていません。 GUI NAME:  " + type.toString() ));
-            player.closeInventory();
+            try{
+                player.sendMessage(toColor("&c&lそのGUIは登録されていません。 GUI NAME:  " + type.toString() ));
+                player.closeInventory();
+            } catch (Exception E) {
+                player.sendMessage(toColor("&c&lそのGUIは開けませんでした。"));
+            }
         }
     }
 

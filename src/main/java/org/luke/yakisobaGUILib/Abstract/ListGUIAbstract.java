@@ -8,6 +8,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.luke.yakisobaGUILib.YakisobaGUIManager;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     static final Integer CLICK_BACK = 9 * 5;
     static final Integer START_BAR_INDEX = 9 * 5;
     static final Integer GUI_ITEM_SIZE = 9 * 5;
+
+    Map<Integer, ItemStack> controllerItems = new HashMap<>();
 
     public Player player = null;
 
@@ -106,6 +109,10 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 
         //----------下の操作バー----------
+        //カスタムバー//
+        for(var mapSet : controllerItems.entrySet()) {
+            inventory.setItem(mapSet.getKey() + START_BAR_INDEX, mapSet.getValue());
+        }
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {
             if (CLICK_CENTER == i && whenClickCenter() != null) {
                 if(setCenterItemStack() != null) {
@@ -156,8 +163,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             for (int i = 0; i < items.size(); i++) {
                 inventory.setItem(i, items.get(i));
             }
-
-
         }
 
 

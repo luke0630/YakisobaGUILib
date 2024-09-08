@@ -22,7 +22,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     static final Integer START_BAR_INDEX = 9 * 5;
     static final Integer GUI_ITEM_SIZE = 9 * 5;
 
-    Map<Integer, ItemStack> controllerItems = new HashMap<>();
+    public Map<Integer, ItemStack> controllerItems = new HashMap<>();
 
     public Player player = null;
 

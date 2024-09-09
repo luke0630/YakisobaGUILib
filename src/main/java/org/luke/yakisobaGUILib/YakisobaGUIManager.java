@@ -11,18 +11,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.luke.yakisobaGUILib.Abstract.GUIAbstract;
 import org.luke.yakisobaGUILib.Abstract.ListGUIAbstract;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.luke.takoyakiLibrary.TakoUtility.toColor;
 
 public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements Listener {
-    private Map<Player, Enum<?>> openGUI = new HashMap<>();
+    private Map<Player, Enum<?>> openGUI = new WeakHashMap<>();
 
     private List<GUIAbstract<?>> guiList = new ArrayList<>();
-    private Map<Player, Integer> playerCurrentPage = new HashMap<>();
+    private Map<Player, Integer> playerCurrentPage = new WeakHashMap<>();
 
     public Map<Player, Integer> getPlayerCurrentPage() {
         return playerCurrentPage;

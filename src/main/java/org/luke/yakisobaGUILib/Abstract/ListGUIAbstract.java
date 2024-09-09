@@ -56,8 +56,12 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     public abstract InventoryRunnable whenClickCenter();
 
     public abstract InventoryRunnable whenClickBack();
+    public void customInventoryClickEvent(InventoryClickEvent event) {
+
+    }
 
     public void InventoryClickListener(InventoryClickEvent event, Map<Player, Integer> pageMap) {
+        customInventoryClickEvent(event);
         // 共通のクリックイベント処理
         Player player = (Player) event.getWhoClicked();
 
@@ -109,10 +113,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 
         //----------下の操作バー----------
-        //カスタムバー//
-        for(var mapSet : controllerItems.entrySet()) {
-            inventory.setItem(mapSet.getKey() + START_BAR_INDEX, mapSet.getValue());
-        }
         for (int i = START_BAR_INDEX; i < GUI_SIZE; i++) {
             if (CLICK_CENTER == i && whenClickCenter() != null) {
                 if(setCenterItemStack() != null) {
@@ -165,6 +165,11 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             }
         }
 
+        //カスタムバー//
+        for(var mapSet : controllerItems.entrySet()) {
+            player.sendMessage("key - " + mapSet.getKey() + "  value - " + mapSet.getValue());
+            inventory.setItem(mapSet.getKey() + START_BAR_INDEX, mapSet.getValue());
+        }
 
         return inventory;
     }

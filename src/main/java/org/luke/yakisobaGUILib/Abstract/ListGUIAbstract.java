@@ -88,7 +88,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         var currentOpenPage = pageMap.get(player);
         if(currentOpenPage == null) return;
         var maxPage = getMaxPage( getItemList().size() );
-        player.sendMessage("ここまで来ました");
         if(currentOpenPage > 0 && slot == START_BAR_INDEX + 7) {
             //戻る
             pageMap.replace(player, pageMap.get(player)-1);
@@ -167,7 +166,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
         //カスタムバー//
         for(var mapSet : controllerItems.entrySet()) {
-            player.sendMessage("key - " + mapSet.getKey() + "  value - " + mapSet.getValue());
             inventory.setItem(mapSet.getKey() + START_BAR_INDEX, mapSet.getValue());
         }
 

@@ -56,9 +56,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     public abstract InventoryRunnable whenClickCenter();
 
     public abstract InventoryRunnable whenClickBack();
-    public void customInventoryClickEvent(InventoryClickEvent event) {
-
-    }
+    public abstract void customInventoryClickEvent(InventoryClickEvent event);
 
     public void InventoryClickListener(InventoryClickEvent event, Map<Player, Integer> pageMap) {
         customInventoryClickEvent(event);

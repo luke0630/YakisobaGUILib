@@ -1,6 +1,5 @@
 package org.luke.yakisobaGUILib;
 
-import org.bukkit.entity.Explosive;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -10,13 +9,12 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.luke.yakisobaGUILib.Abstract.GUIAbstract;
 import org.luke.yakisobaGUILib.Abstract.ListGUIAbstract;
-
 import java.util.*;
 
 import static org.luke.takoyakiLibrary.TakoUtility.toColor;
 
 public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements Listener {
-    private Map<Player, Enum<?>> openGUI = new WeakHashMap<>();
+    private Map<Player, GUIAbstract<?>> openGUI = new WeakHashMap<>();
 
     private List<GUIAbstract<?>> guiList = new ArrayList<>();
     private Map<Player, Integer> playerCurrentPage = new WeakHashMap<>();
@@ -47,19 +45,31 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
 
     public void  getAndOpenGUI(Enum<?> type, Player player) {
         Inventory inventory = null;
+        GUIAbstract<? extends Enum<?>> newInstance = null;
         for(var gui : guiList) {
             if(gui.getType() == type) {
-                if(gui instanceof ListGUIAbstract<?> listGUIa) {
+                //クラスを抽出
+                Class<?> clazz = gui.getClass();
+
+                // 新しいインスタンスを作成
+                try {
+                    newInstance = (GUIAbstract<?>) clazz.getDeclaredConstructor().newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if(newInstance instanceof ListGUIAbstract<?> listGUIa) {
                     inventory = listGUIa.getInventoryList(player, playerCurrentPage);
                 } else {
-                    inventory = gui.getInventory(player);
+                    inventory = newInstance.getInventory(player);
                 }
+                break;
             }
         }
         if(inventory != null) {
-            openGUI.put(player, type);
+            openGUI.put(player, newInstance);
             player.openInventory(inventory);
-            openGUI.put(player, type);
+            openGUI.put(player, newInstance);
         } else {
             try{
                 player.sendMessage(toColor("&c&lそのGUIは登録されていません。 GUI NAME:  " + type.toString() ));
@@ -90,18 +100,10 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         if(clickedInventory != topInventory) return;
         event.setCancelled(true);
 
-        for(var openSet : openGUI.values()) {
-            for(var gui : guiList) {
-                if(gui.getType() == openSet) {
-                    if(gui instanceof ListGUIAbstract<?> listGUI) {
-                        listGUI.InventoryClickListener(event, playerCurrentPage);
-                        break;
-                    }
-                    gui.InventoryClickListener(event);
-                    break;
-                }
-            }
+        if(openGUI.get(player) instanceof ListGUIAbstract<?> listGUI) {
+            listGUI.InventoryClickListener(event, playerCurrentPage);
+        } else {
+            openGUI.get(player).InventoryClickListener(event);
         }
-
     }
 }

@@ -26,11 +26,11 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
     public Player player = null;
 
-    public void setOpenGUI(Map<Player, Enum<?>> openGUI) {
+    public void setOpenGUI(Map<Player, GUIAbstract<?>> openGUI) {
         this.openGUI = openGUI;
     }
 
-    private Map<Player, Enum<?>> openGUI;
+    private Map<Player, GUIAbstract<?>> openGUI;
 
     /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
 
@@ -90,12 +90,12 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             //戻る
             pageMap.replace(player, pageMap.get(player)-1);
             player.openInventory(getInventoryList(player, pageMap));
-            openGUI.put(player, getType());
+            openGUI.put(player, this);
         } else if(currentOpenPage < maxPage && slot == START_BAR_INDEX+8) {
             //次へ
             pageMap.replace(player, pageMap.get(player)+1);
             player.openInventory(getInventoryList(player, pageMap));
-            openGUI.put(player, getType());
+            openGUI.put(player, this);
         }
         //------------下のバーの戻る次へボタン-----------
     }
@@ -139,7 +139,9 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             int openPage = pageMap.get(player);
             int minIndex = openPage * 45;
 
+            var inventoryCurrentItems = inventory.getContents();
             inventory = Bukkit.createInventory(null, GUI_SIZE, toColor(getGUITitle() + " &8&lページ" + (openPage + 1) + "/" + (maxPage + 1)));
+            inventory.setContents(inventoryCurrentItems);
 
             //戻るボタンの表示
             if (openPage > 0) {

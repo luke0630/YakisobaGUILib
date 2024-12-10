@@ -1,5 +1,6 @@
 package org.luke.yakisobaGUILib;
 
+import lombok.Getter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -76,9 +77,6 @@ public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements
         Player player = (Player) event.getPlayer();
         openGUI.remove(player);
     }
-
-
-    
     @EventHandler
     public void onClickInventory(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();

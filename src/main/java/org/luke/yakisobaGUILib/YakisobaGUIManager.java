@@ -14,26 +14,16 @@ import java.util.*;
 import static org.luke.takoyakiLibrary.TakoUtility.toColor;
 
 public class YakisobaGUIManager<E extends Enum<E>, L extends Enum<L>> implements Listener {
+    @Getter
     private Map<Player, GUIAbstract<?>> openGUI = new WeakHashMap<>();
-
     private List<GUIAbstract<?>> guiList = new ArrayList<>();
+    @Getter
     private Map<Player, Integer> playerCurrentPage = new WeakHashMap<>();
 
-    public Map<Player, Integer> getPlayerCurrentPage() {
-        return playerCurrentPage;
-    }
-
-    public YakisobaGUIManager() {
-    }
-
-    public void Initialization(JavaPlugin plugin, List<GUIAbstract<?>> guiList) {
+    public void Initialization(List<GUIAbstract<?>> guiList) {
+        JavaPlugin plugin = YakisobaGUILib.getInstance().getPlugin();
         plugin.getServer().getPluginManager().registerEvents( this, plugin );
         this.guiList = guiList;
-        for(var gui : guiList) {
-            if(gui instanceof ListGUIAbstract<?> listGUI) {
-                listGUI.setOpenGUI(openGUI);
-            }
-        }
     }
 
     public void OpenGUI(Player player, Enum<E> eEnum) {

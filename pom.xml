@@ -73,10 +73,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.36</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>com.github.luke0630</groupId>
             <artifactId>TakoyakiLibrary</artifactId>
-            <version>3.0</version>
-            <scope>compile</scope>
+            <version>3.3</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

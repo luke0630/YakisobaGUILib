@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="TakoyakiLibrary">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../TakoyakiLibrary/out/artifacts/TakoyakiLibrary_jar/TakoyakiLibrary.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

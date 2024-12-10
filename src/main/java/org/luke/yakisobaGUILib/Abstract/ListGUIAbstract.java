@@ -6,7 +6,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.luke.yakisobaGUILib.YakisobaGUILib;
 import org.luke.yakisobaGUILib.YakisobaGUIManager;
+import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,12 +27,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     public Map<Integer, ItemStack> controllerItems = new HashMap<>();
 
     public Player player = null;
-
-    public void setOpenGUI(Map<Player, GUIAbstract<?>> openGUI) {
-        this.openGUI = openGUI;
-    }
-
-    private Map<Player, GUIAbstract<?>> openGUI;
 
     /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
 
@@ -90,20 +86,19 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             //戻る
             pageMap.replace(player, pageMap.get(player)-1);
             player.openInventory(getInventoryList(player, pageMap));
-            openGUI.put(player, this);
         } else if(currentOpenPage < maxPage && slot == START_BAR_INDEX+8) {
             //次へ
             pageMap.replace(player, pageMap.get(player)+1);
             player.openInventory(getInventoryList(player, pageMap));
-            openGUI.put(player, this);
         }
+        //openするとCloseInventoryが呼び出されて、guiを開いていないことになってしまうため再代入する
+        YakisobaGUILib.getInstance().getGuiManager().getOpenGUI().put(player, this);
         //------------下のバーの戻る次へボタン-----------
     }
 
 
     //DO NOT ABSTRACT
     public Inventory getInventoryList(Player player, Map<Player, Integer> pageMap) {
-
         this.player = player;
 
         var items = getItemList();

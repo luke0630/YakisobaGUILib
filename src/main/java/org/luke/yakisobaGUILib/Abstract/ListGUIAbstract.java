@@ -7,8 +7,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.luke.yakisobaGUILib.YakisobaGUILib;
-import org.luke.yakisobaGUILib.YakisobaGUIManager;
-import org.yaml.snakeyaml.constructor.SafeConstructor;
 
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +90,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             player.openInventory(getInventoryList(player, pageMap));
         }
         //openするとCloseInventoryが呼び出されて、guiを開いていないことになってしまうため再代入する
-        YakisobaGUILib.getInstance().getGuiManager().getOpenGUI().put(player, this);
+        YakisobaGUILib.getInstance().getOpenGUI().put(player, this);
         //------------下のバーの戻る次へボタン-----------
     }
 

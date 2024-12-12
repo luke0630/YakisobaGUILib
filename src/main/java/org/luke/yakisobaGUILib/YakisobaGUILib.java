@@ -33,10 +33,10 @@ public final class YakisobaGUILib<E extends Enum<E>, L extends Enum<L>> implemen
         this.guiList = guiList;
     }
 
-    public void OpenGUI(Player player, Enum<E> eEnum) {
+    public void OpenGUI(Player player, E eEnum) {
         getAndOpenGUI(eEnum, player);
     }
-    public void OpenListGUI(Player player, Enum<L> lEnum) {
+    public void OpenListGUI(Player player, L lEnum) {
         getAndOpenGUI(lEnum, player);
     }
 

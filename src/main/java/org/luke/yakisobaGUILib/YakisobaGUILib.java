@@ -29,6 +29,7 @@ public final class YakisobaGUILib<E extends Enum<E>, L extends Enum<L>> implemen
     private Map<Player, Integer> playerCurrentPage = new WeakHashMap<>();
 
     public YakisobaGUILib(JavaPlugin plugin, List<GUIAbstract<?>> guiList) {
+        instance = this;
         plugin.getServer().getPluginManager().registerEvents( this, plugin );
         this.guiList = guiList;
     }

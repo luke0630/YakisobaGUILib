@@ -7,4 +7,8 @@ public class CustomRunnable {
     public interface InventoryRunnable {
         void run(InventoryClickEvent event);
     }
+    @FunctionalInterface
+    public interface InventoryIndexRunnable {
+        void run(InventoryClickEvent event, Integer index);
+    }
 }

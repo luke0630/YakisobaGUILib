@@ -45,7 +45,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
     public abstract ItemStack setCenterItemStack();
 
-    public abstract InventoryRunnable whenClickContent();
+    public abstract InventoryIndexRunnable whenClickContent();
 
     public abstract InventoryRunnable whenClickCenter();
 
@@ -68,7 +68,8 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             inventoryRunnable = whenClickBack();
         } else if(slot < 5*9) {
             if(event.getCurrentItem() != null) {
-                inventoryRunnable = whenClickContent();
+                Integer resultSlot = pageMap.get(player) * 44 + event.getSlot();
+                whenClickContent().run(event, resultSlot);
             }
         }
         if(inventoryRunnable != null) {

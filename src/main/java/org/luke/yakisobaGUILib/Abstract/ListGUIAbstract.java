@@ -68,7 +68,10 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
             inventoryRunnable = whenClickBack();
         } else if(slot < 5*9) {
             if(event.getCurrentItem() != null) {
-                Integer resultSlot = pageMap.get(player) * 45 + event.getSlot();
+                int resultSlot = event.getSlot();
+                if(pageMap.containsKey(player)) {
+                    resultSlot = pageMap.get(player) * 45 + event.getSlot();
+                }
                 whenClickContent().run(event, resultSlot);
             }
         }

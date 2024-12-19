@@ -85,11 +85,11 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
         if(currentOpenPage > 0 && slot == START_BAR_INDEX + 7) {
             //戻る
             pageMap.replace(player, pageMap.get(player)-1);
-            player.openInventory(getInventoryList(player, pageMap));
+            player.openInventory(getInventoryList(pageMap));
         } else if(currentOpenPage < maxPage && slot == START_BAR_INDEX+8) {
             //次へ
             pageMap.replace(player, pageMap.get(player)+1);
-            player.openInventory(getInventoryList(player, pageMap));
+            player.openInventory(getInventoryList(pageMap));
         }
         //openするとCloseInventoryが呼び出されて、guiを開いていないことになってしまうため再代入する
         YakisobaGUILib.getInstance().getOpenGUI().put(player, this);
@@ -98,9 +98,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
 
     //DO NOT ABSTRACT
-    public Inventory getInventoryList(Player player, Map<Player, Integer> pageMap) {
-        this.player = player;
-
+    public Inventory getInventoryList(Map<Player, Integer> pageMap) {
         var items = getItemList();
         Inventory inventory = getInitInventory(GUI_SIZE, toColor(getGUITitle()));
 

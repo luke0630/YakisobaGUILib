@@ -10,4 +10,7 @@ public abstract class GUIAbstract<E extends Enum<E>> {
     public abstract E getType();
     public abstract Inventory getInventory();
     public abstract void InventoryClickListener(InventoryClickEvent event);
+    public void onStart() {
+
+    }
 }

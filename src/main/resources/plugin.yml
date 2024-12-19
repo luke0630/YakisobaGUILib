@@ -1,4 +1,4 @@
 name: YakisobaGUILib
 version: '1.0-SNAPSHOT'
-main: org.luke.yakisobaGUILib.YakisobaGUILib
+main: org.luke.yakisobaGUILib.Main
 api-version: '1.21'

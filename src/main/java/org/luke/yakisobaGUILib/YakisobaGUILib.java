@@ -64,13 +64,6 @@ public final class YakisobaGUILib<E extends Enum<E>, L extends Enum<L>> implemen
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-                if(newInstance instanceof ListGUIAbstract<?> listGUIa) {
-                    inventory = listGUIa.getInventoryList(player, playerCurrentPage);
-                } else {
-                    inventory = newInstance.getInventory(player);
-                }
                 break;
             }
         }

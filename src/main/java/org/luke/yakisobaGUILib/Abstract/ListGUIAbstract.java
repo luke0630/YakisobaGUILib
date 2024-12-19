@@ -24,10 +24,7 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
 
     public Map<Integer, ItemStack> controllerItems = new HashMap<>();
 
-    public Player player = null;
-
     /////****ListGUIAbstractを継承する際にOverrideしなくていいものをここでしておくことで使えないようにする****////
-
     @Override
     public Inventory getInventory(Player player) {
         return null;

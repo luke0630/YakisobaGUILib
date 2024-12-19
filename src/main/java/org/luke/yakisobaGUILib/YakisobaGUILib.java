@@ -52,6 +52,15 @@ public final class YakisobaGUILib<E extends Enum<E>, L extends Enum<L>> implemen
                 // 新しいインスタンスを作成
                 try {
                     newInstance = (GUIAbstract<?>) clazz.getDeclaredConstructor().newInstance();
+                    newInstance.player = player;
+
+                    newInstance.onStart();
+
+                    if(newInstance instanceof ListGUIAbstract<?> listGUIa) {
+                        inventory = listGUIa.getInventoryList(playerCurrentPage);
+                    } else {
+                        inventory = newInstance.getInventory();
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

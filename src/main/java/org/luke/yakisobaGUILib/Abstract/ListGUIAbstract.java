@@ -52,8 +52,6 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
     public void InventoryClickListener(InventoryClickEvent event, Map<Player, Integer> pageMap) {
         customInventoryClickEvent(event);
         // 共通のクリックイベント処理
-        Player player = (Player) event.getWhoClicked();
-
         var slot = event.getSlot();
         event.setCancelled(true);
         InventoryRunnable inventoryRunnable = null;

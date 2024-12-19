@@ -8,6 +8,6 @@ public abstract class GUIAbstract<E extends Enum<E>> {
     public Player player = null;
 
     public abstract E getType();
-    public abstract Inventory getInventory(Player player);
+    public abstract Inventory getInventory();
     public abstract void InventoryClickListener(InventoryClickEvent event);
 }

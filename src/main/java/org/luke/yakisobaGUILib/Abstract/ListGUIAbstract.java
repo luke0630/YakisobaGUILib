@@ -67,7 +67,10 @@ public abstract class ListGUIAbstract<L extends Enum<L>> extends GUIAbstract<L> 
                 if(pageMap.containsKey(player)) {
                     resultSlot = pageMap.get(player) * 45 + event.getSlot();
                 }
-                whenClickContent().run(event, resultSlot);
+
+                if(whenClickContent() != null) {
+                    whenClickContent().run(event, resultSlot);
+                }
             }
         }
         if(inventoryRunnable != null) {
